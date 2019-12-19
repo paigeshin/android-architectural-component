@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel;
 public class PracticeViewModel extends ViewModel {
 
     private int count = 0;
-    private MutableLiveData<Integer> mutableCount = new MutableLiveData<>();
+    private MutableLiveData<Integer> mutableCount;
 
     public MutableLiveData<Integer> initialize(){
         mutableCount.setValue(count);

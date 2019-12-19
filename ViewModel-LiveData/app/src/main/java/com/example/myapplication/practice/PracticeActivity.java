@@ -1,9 +1,8 @@
 package com.example.myapplication.practice;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.os.Bundle;
@@ -15,43 +14,39 @@ import com.example.myapplication.R;
 
 public class PracticeActivity extends AppCompatActivity {
 
-    private PracticeViewModel practiceViewModel;
-    private LiveData<Integer> mutableCount;
     private TextView tvCount;
     private Button btnCount;
+
+    private PracticeViewModel practiceViewModel;
+    private MutableLiveData<Integer> mutableCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_practice);
         init();
-        viewModelHandler();
-        countObserver();
-        countListener();
+        initializeViewModel();
+        eventListener();
     }
 
-    //view binding
     private void init(){
-        tvCount = findViewById(R.id.tvCount_from_activity_practice);
-        btnCount = findViewById(R.id.btnCount_from_activity_practice);
+        tvCount = findViewById(R.id.tvCount_from_practice);
+        btnCount = findViewById(R.id.btnCount_from_practice);
     }
 
-    private void viewModelHandler(){
+    private void initializeViewModel(){
         practiceViewModel = ViewModelProviders.of(PracticeActivity.this).get(PracticeViewModel.class);
         mutableCount = practiceViewModel.initialize();
-    }
-
-    private void countObserver(){
         mutableCount.observe(PracticeActivity.this, new Observer<Integer>() {
             @Override
             public void onChanged(Integer integer) {
-                String text = "Count: " + integer;
+                String text = "count: " + integer;
                 tvCount.setText(text);
             }
         });
     }
 
-    private void countListener(){
+    private void eventListener(){
         btnCount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
