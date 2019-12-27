@@ -11,7 +11,7 @@ import com.anushka.androidtutz.contactmanager.db.entity.Contact;
 import java.util.List;
 
 @Dao
-public interface ContactDAO {
+public interface ContactDao {
 
     @Insert
     long addContact(Contact contact);
