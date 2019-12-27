@@ -14,13 +14,13 @@ public class Contact {
 //    public static final String COLUMN_NAME = "contact_name";
 //    public static final String COLUMN_EMAIL = "contact_email";
 
-    @ColumnInfo(name = "contact_id")
+    @ColumnInfo(name = "contact_email")
     private String name;
 
     @ColumnInfo(name = "contact_name")
     private String email;
 
-    @ColumnInfo(name = "contact_email")
+    @ColumnInfo(name = "contact_id")
     @PrimaryKey(autoGenerate = true)
     private long id;
 

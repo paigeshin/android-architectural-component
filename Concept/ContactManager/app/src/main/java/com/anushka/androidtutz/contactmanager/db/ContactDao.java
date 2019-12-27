@@ -28,4 +28,7 @@ public interface ContactDao {
     @Query("SELECT * FROM contacts WHERE contact_id = :contactId")
     Contact getContact(long contactId);
 
+    @Query("DELETE FROM contacts")
+    void deleteAllContact();
+
 }
