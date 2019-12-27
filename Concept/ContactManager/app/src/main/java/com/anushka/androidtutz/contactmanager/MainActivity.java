@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
         contactsAppDatabase = Room
                 .databaseBuilder(this, ContactsAppDatabase.class, "Contact_DB")
-                .allowMainThreadQueries()
+//                .allowMainThreadQueries()
                 .build();
 
 //        contactsAppDatabase.getContactDao().deleteAllContact();
@@ -176,8 +176,7 @@ public class MainActivity extends AppCompatActivity {
         contact.setEmail(email);
 
         contactArrayList.set(position, contact);
-
-        contactsAdapter.notifyDataSetChanged();
+        new UpdateContactAsyncTask().execute(contact);
 
 
     }
