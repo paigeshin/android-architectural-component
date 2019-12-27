@@ -7,6 +7,7 @@ import android.os.Bundle;
 import com.anushka.androidtutz.contactmanager.db.ContactsAppDatabase;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -14,8 +15,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.room.Room;
+import androidx.room.RoomDatabase;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
@@ -50,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
         contactsAppDatabase = Room
                 .databaseBuilder(this, ContactsAppDatabase.class, "Contact_DB")
+                .addCallback(callback)
 //                .allowMainThreadQueries()
                 .build();
 
@@ -285,5 +290,29 @@ public class MainActivity extends AppCompatActivity {
             contactsAdapter.notifyDataSetChanged();
         }
     }
+
+    RoomDatabase.Callback callback = new RoomDatabase.Callback() {
+
+        @Override
+        public void onCreate(@NonNull SupportSQLiteDatabase db) {
+            super.onCreate(db);
+
+            Log.i("MainActivity", "callback on create invoked");
+
+            //여기서 데이터를 initialize 할 수 있다.
+
+        }
+
+        @Override
+        public void onOpen(@NonNull SupportSQLiteDatabase db) {
+            super.onOpen(db);
+
+            new CreateContactAsyncTask().execute(new Contact(0, "item1", "email"));
+            new CreateContactAsyncTask().execute(new Contact(0, "item2", "email"));
+            new CreateContactAsyncTask().execute(new Contact(0, "item3", "email"));
+
+            Log.i("MainActivity", "callback on open invoked");
+        }
+    };
 
 }
